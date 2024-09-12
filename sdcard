@@ -3,7 +3,8 @@
 
 # this python code provides read-only access to the /sdcard/ (pseudo)folder
 # on an android smartphone.
-# it uses fuse-python and adb_shell.
+# it uses fuse-python (https://github.com/libfuse/python-fuse) and
+# adb_shell (https://github.com/JeffLIrion/adb_shell).
 
 
 # as a reminder, android smartphone must have “developer options” enabled, as
@@ -73,7 +74,7 @@ gid, uid = getgid(), getuid()
 
 
 class reader(fuse.Fuse):
-	# initialization
+
 	def __init__(self, *args, **kw):
 		fuse.Fuse.__init__(self, *args, **kw)
 		# dictionaries 'attributes' and 'items' will be used as cache
