@@ -44,7 +44,19 @@ rVRI4jTYoNX9Iv3/E+F+4LW6we5RJ6Vi+ksJxWleM+xnvOIb9CWcok+ZsYIMuLYf
 a20sYSh+Joe+80Tdcqkj5fs=
 -----END PRIVATE KEY-----
 """, """
-QAAAAC1yo0pbUiSrPEsCL/LX9UpFY8umaBE4cWJ6n005V8M2DLUlQUQDMZKlXNldDUrL3naPsNdRnMJ1UpA63fOEwPxVQhm7uT0mGr8NELC2hgY/vaBTVJlH1zQT0xhRwnx/AlsXzm4ftloEZ9gpq4hG8YH6tBpEG8FNQh2bQkydg7SoFtfbN7Op9JIXMbpbgvR0pDSLD5nR964ttyRQPj0CTD71yz71kSTIji+58jA84dYqbx6KxzsCng8gZSDqe5sbcqQL8Qs3QSPzxUsXAKv93iiiamCepKc8s6+DvvbizDmRhTxKwQEtc2/lFNmcQ78FeNsGKS8dpenYtCmkKOBHsfVVFGySrq1F5NWyYYDLBlOGgpPzp1hWMvYnN64UzcHPS4ZoUqpgEVicQpnM5n6dPuHx9YQzP7uxbg7JCysllU5NqYu/NDCEHNCCTNGeja27eGodW+m/iOleggth+UibFoqFBAqUegenvXKxPgvmzj+08wE0hO5TNIFkkiMNa3JV9bn3Ojh6D5TZ710EL+aUOVFwfM6wKi2gJhYOklRaCbQCd1hVw1sx9ZP5+I0FhwA5oJBx1FVRNfzYAIb5ImeG6ZBc42omcYNLcQ/PYP9qk+T5TfqC0uJGLiM4opWHRT5mop8i3DpB10hlTsP1exnOo2mKAwZ3bQcuyqCeAwotARJT5rxeMAEAAQA= sdcard_reader
+-----BEGIN PUBLIC KEY-----
+QAAAAC1yo0pbUiSrPEsCL/LX9UpFY8umaBE4cWJ6n005V8M2DLUlQUQDMZKlXNld
+DUrL3naPsNdRnMJ1UpA63fOEwPxVQhm7uT0mGr8NELC2hgY/vaBTVJlH1zQT0xhR
+wnx/AlsXzm4ftloEZ9gpq4hG8YH6tBpEG8FNQh2bQkydg7SoFtfbN7Op9JIXMbpb
+gvR0pDSLD5nR964ttyRQPj0CTD71yz71kSTIji+58jA84dYqbx6KxzsCng8gZSDq
+e5sbcqQL8Qs3QSPzxUsXAKv93iiiamCepKc8s6+DvvbizDmRhTxKwQEtc2/lFNmc
+Q78FeNsGKS8dpenYtCmkKOBHsfVVFGySrq1F5NWyYYDLBlOGgpPzp1hWMvYnN64U
+zcHPS4ZoUqpgEVicQpnM5n6dPuHx9YQzP7uxbg7JCysllU5NqYu/NDCEHNCCTNGe
+ja27eGodW+m/iOleggth+UibFoqFBAqUegenvXKxPgvmzj+08wE0hO5TNIFkkiMN
+a3JV9bn3Ojh6D5TZ710EL+aUOVFwfM6wKi2gJhYOklRaCbQCd1hVw1sx9ZP5+I0F
+hwA5oJBx1FVRNfzYAIb5ImeG6ZBc42omcYNLcQ/PYP9qk+T5TfqC0uJGLiM4opWH
+RT5mop8i3DpB10hlTsP1exnOo2mKAwZ3bQcuyqCeAwotARJT5rxeMAEAAQA=
+-----END PUBLIC KEY-----
 """
 
 
@@ -61,7 +73,6 @@ from sys import exit, stderr
 from stat import S_ISDIR as isDir
 from errno import EACCES as noEntry
 from errno import EACCES as accessDenied
-from keys import private, public
 from usb1 import USBErrorBusy as busyUSB
 from adb_shell.adb_device import AdbDeviceUsb
 from adb_shell.auth.sign_pythonrsa import PythonRSASigner
