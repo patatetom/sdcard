@@ -1,0 +1,119 @@
+#!/usr/bin/env python
+
+
+# this python code provides read-only access to the /sdcard/ (pseudo)folder
+# on an android smartphone.
+# it uses fuse-python and adb_shell.
+
+
+# TODO sdcard (default) or root (-root option)
+# TODO cache (default) or no cache (-nocache option)
+
+
+# imports
+import fuse
+from io import BytesIO
+from time import sleep
+from os import getgid, getuid
+from sys import exit, stderr
+from stat import S_ISDIR as isDir
+from errno import EACCES as noEntry
+from errno import EACCES as accessDenied
+from keys import private, public
+from usb1 import USBErrorBusy as busyUSB
+from adb_shell.adb_device import AdbDeviceUsb
+from adb_shell.auth.sign_pythonrsa import PythonRSASigner
+
+
+# new API
+fuse.fuse_python_api = (0, 2)
+# get ids of the current user
+gid, uid = getgid(), getuid()
+
+
+class reader(fuse.Fuse):
+	# initialization
+	def __init__(self, *args, **kw):
+		fuse.Fuse.__init__(self, *args, **kw)
+		# dictionaries 'attributes' and 'items' will be used as cache
+		self.attributes, self.items = {}, {}
+
+	def getattr(self, path):
+		if path in self.attributes:
+			return self.attributes[path]
+		else:
+			# file attributes are obtained using device.stat
+			mode, size, time = device.stat("/sdcard" + path)
+			if not mode:
+				return -noEntry
+			attributes = fuse.Stat()
+			directory = isDir(mode)
+			attributes.st_atime, attributes.st_ctime, attributes.st_mtime = time, time, time
+			attributes.st_mode, attributes.st_nlink = mode, (directory and 2 or 1)
+			attributes.st_size = (not directory and size or 0)
+			attributes.st_gid, attributes.st_uid = gid, uid
+			# caching attributes for future calls
+			self.attributes[path] = attributes
+			return attributes
+
+	def readdir(self, path, offset):
+		if path in self.items:
+			for item in self.items[path]:
+				yield fuse.Direntry(item)
+		else:
+			# list of files (eg. items) is obtained using device.list
+			items = [item.filename.decode() for item in device.list("/sdcard" + path)]
+			# caching items for future calls
+			self.items[path] = set(items)
+			for item in items:
+				yield fuse.Direntry(item)
+
+	def open(self, path, flags):
+		# only read-only mode supported
+		if flags != 0x8000:
+			return -accessDenied
+		# not sure if this next test is necessary...
+		if not path in self.attributes:
+			return -noEntry
+
+	def read(self, path, size, offset):
+		# not sure if this test is necessary
+		if not path in self.attributes:
+			return -noEntry
+		attributes = self.attributes[path]
+		if offset < attributes.st_size:
+			if offset + size > attributes.st_size:
+				size = attributes.st_size - offset
+			buffer = BytesIO()
+			# file content is obtained using device.pull
+			device.pull("/sdcard" + path, buffer)
+			return buffer.getvalue()[offset:(offset + size)]
+		else:
+			return b''
+
+
+server = reader()
+server.parse()
+
+
+signer = PythonRSASigner(public, private)
+try:
+	device = AdbDeviceUsb()
+except Exception as error:
+	exit(error)
+while not device.available:
+	try:
+		devnull = device.connect(rsa_keys=[signer], auth_timeout_s=0.5)
+		device.close()
+		devnull = device.connect(rsa_keys=[signer], auth_timeout_s=0.5)
+	except busyUSB:
+		# the USB port is busy: adb (android platform tools) or another instance
+		# of this code may be causing the problem...
+		print("USB device busy : attempt to reconnect in 3s...", file=stderr)
+		sleep(3)
+	except Exception as error:
+		exit(error)
+
+
+server.main()
+device.close()
