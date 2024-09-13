@@ -76,6 +76,7 @@ from errno import EACCES as accessDenied
 from usb1 import USBErrorBusy as busyUSB
 from adb_shell.adb_device import AdbDeviceUsb
 from adb_shell.auth.sign_pythonrsa import PythonRSASigner
+from os import O_RDONLY, O_WRONLY, O_RDWR
 
 
 # new API
@@ -123,9 +124,9 @@ class reader(fuse.Fuse):
 
 	def open(self, path, flags):
 		# only read-only mode supported
-		if flags != 0x8000:
+		if flags & (O_RDONLY | O_WRONLY | O_RDWR) != O_RDONLY:
 			return -accessDenied
-		# not sure if this next test is necessary...
+		# not sure if this test is necessary
 		if not path in self.attributes:
 			return -noEntry
 
