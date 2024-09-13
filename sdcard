@@ -89,8 +89,8 @@ class reader(fuse.Fuse):
 
 	def __init__(self, *args, **kw):
 		fuse.Fuse.__init__(self, *args, **kw)
-		# dictionaries 'attributes' and 'items' will be used as cache
-		self.attributes, self.items = {}, {}
+		# dictionaries 'attributes', 'items' and 'buffers' will be used as caches
+		self.attributes, self.items, self.buffers = {}, {}, {}
 
 	def getattr(self, path):
 		if path in self.attributes:
@@ -126,24 +126,31 @@ class reader(fuse.Fuse):
 		# only read-only mode supported
 		if flags & (O_RDONLY | O_WRONLY | O_RDWR) != O_RDONLY:
 			return -accessDenied
-		# not sure if this test is necessary
+		# not sure if this test (path in) is necessary
 		if not path in self.attributes:
 			return -noEntry
 
 	def read(self, path, size, offset):
-		# not sure if this test is necessary
+		# not sure if this test (path in) is necessary
 		if not path in self.attributes:
 			return -noEntry
 		attributes = self.attributes[path]
 		if offset < attributes.st_size:
 			if offset + size > attributes.st_size:
 				size = attributes.st_size - offset
+		else:
+			return b''
+		if path in self.buffers:
+			return self.buffers[path].getvalue()[offset:(offset + size)]
+		else:
 			buffer = BytesIO()
 			# file content is obtained using device.pull
 			device.pull("/sdcard" + path, buffer)
+			self.buffers[path] = buffer
 			return buffer.getvalue()[offset:(offset + size)]
-		else:
-			return b''
+
+	def flush(self, path):
+		self.buffers.pop(path)
 
 
 server = reader()
