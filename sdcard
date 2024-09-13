@@ -107,9 +107,10 @@ class reader(fuse.Fuse):
 			attributes = fuse.Stat()
 			directory = isDir(mode)
 			attributes.st_atime, attributes.st_ctime, attributes.st_mtime = time, time, time
-			attributes.st_mode, attributes.st_nlink = mode, (directory and 2 or 1)
+			attributes.st_mode = (directory and 0o40550 or 0o100440)
 			attributes.st_size = (not directory and size or 0)
 			attributes.st_gid, attributes.st_uid = gid, uid
+			attributes.st_nlink = (directory and 2 or 1)
 			# caching attributes for future calls
 			self.attributes[path] = attributes
 			return attributes
