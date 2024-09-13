@@ -149,7 +149,7 @@ class reader(fuse.Fuse):
 			self.buffers[path] = buffer
 			return buffer.getvalue()[offset:(offset + size)]
 
-	def flush(self, path):
+	def release(self, path, flags):
 		self.buffers.pop(path)
 
 
