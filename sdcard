@@ -92,6 +92,10 @@ class reader(fuse.Fuse):
 		# dictionaries 'attributes', 'items' and 'buffers' will be used as caches
 		self.attributes, self.items, self.buffers = {}, {}, {}
 
+	def __del__(self):
+		self.attributes, self.items, self.buffers = {}, {}, {}
+		device.close()
+
 	def getattr(self, path):
 		if path in self.attributes:
 			return self.attributes[path]
