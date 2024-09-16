@@ -70,6 +70,7 @@ from time import sleep
 from os import getgid, getuid
 from sys import exit, stderr
 from stat import S_ISDIR as isDir
+from stat import S_ISREG as isReg
 from errno import EACCES as noEntry
 from errno import EACCES as accessDenied
 from usb1 import USBErrorBusy as busyUSB
@@ -117,7 +118,11 @@ class reader(fuse.Fuse):
 				yield fuse.Direntry(item)
 		else:
 			# list of files (eg. items) is obtained using device.list
-			items = [item.filename.decode() for item in device.list(self.root + path)]
+			items = [
+				item.filename.decode()
+				for item in device.list(self.root + path)
+				if isReg(item.mode) or isDir(item.mode)
+			]
 			# caching items for future calls
 			self.items[path] = set(items)
 			for item in items:
