@@ -60,7 +60,6 @@ RT5mop8i3DpB10hlTsP1exnOo2mKAwZ3bQcuyqCeAwotARJT5rxeMAEAAQA=
 """
 
 
-# TODO sdcard (default) or root (-root option)
 # TODO cache (default) or no cache (-nocache option)
 
 
@@ -91,13 +90,14 @@ class reader(fuse.Fuse):
 		fuse.Fuse.__init__(self, *args, **kw)
 		# dictionaries 'attributes', 'items' and 'buffers' will be used as caches
 		self.attributes, self.items, self.buffers = {}, {}, {}
+		self.root = False
 
 	def getattr(self, path):
 		if path in self.attributes:
 			return self.attributes[path]
 		else:
 			# file attributes are obtained using device.stat
-			mode, size, time = device.stat("/sdcard" + path)
+			mode, size, time = device.stat(self.root + path)
 			if not mode:
 				return -noEntry
 			attributes = fuse.Stat()
@@ -117,7 +117,7 @@ class reader(fuse.Fuse):
 				yield fuse.Direntry(item)
 		else:
 			# list of files (eg. items) is obtained using device.list
-			items = [item.filename.decode() for item in device.list("/sdcard" + path)]
+			items = [item.filename.decode() for item in device.list(self.root + path)]
 			# caching items for future calls
 			self.items[path] = set(items)
 			for item in items:
@@ -140,7 +140,7 @@ class reader(fuse.Fuse):
 		else:
 			buffer = BytesIO()
 			# file content is obtained using device.pull
-			device.pull("/sdcard" + path, buffer)
+			device.pull(self.root + path, buffer)
 			# caching buffer for future calls
 			self.buffers[path] = buffer
 			return buffer.getvalue()[offset:(offset + size)]
@@ -148,9 +148,19 @@ class reader(fuse.Fuse):
 	def release(self, path, flags):
 		self.buffers.pop(path)
 
+	def fsinit(self):
+		self.root = not self.root and "/sdcard" or ""
+
 
 server = reader()
-server.parse()
+server.parser.add_option(
+	"-r", "--root",
+	action="store_true",
+	default=False,
+	dest="root",
+	help="access to root (default to /sdcard)"
+)
+server.parse(values=server)
 
 
 signer = PythonRSASigner(public, private)
