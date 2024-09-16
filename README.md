@@ -1,7 +1,7 @@
 # sdcard
 **RO access to the SD card of an Android smartphone**
 
-`sdcard` is a Python script that uses `adb_shell` and `fuse-python` (eg. Linux) to give fast read-only access to the `/sdcard/` (pseudo-)folder of an Android system.
+`sdcard` is a Python script that uses `adb_shell` and `fuse-python` (eg. BSD/Linux/OS-X only) to give fast read-only access to the `/sdcard/` (pseudo-)folder of an Android system.
 
 the Android system accessed must have `Developer Options` enabled, as
 well as `USB Debugging`. the key present in the script must be authorized on the Android side.
