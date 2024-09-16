@@ -11,6 +11,14 @@ well as `USB Debugging`. the key present in the script must be authorized on the
 
 ## installation
 
+### on system side
+
+
+### on user side
+
+
+> _Android tools (eg. `adb`) are not necessary, `adb_shell` is totally independent of them._
+
 
 ## usage
 
