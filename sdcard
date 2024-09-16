@@ -60,9 +60,6 @@ RT5mop8i3DpB10hlTsP1exnOo2mKAwZ3bQcuyqCeAwotARJT5rxeMAEAAQA=
 """
 
 
-# TODO cache (default) or no cache (-nocache option)
-
-
 # imports
 import fuse
 from io import BytesIO
@@ -91,7 +88,7 @@ class reader(fuse.Fuse):
 		fuse.Fuse.__init__(self, *args, **kw)
 		# dictionaries 'attributes', 'items' and 'buffers' will be used as caches
 		self.attributes, self.items, self.buffers = {}, {}, {}
-		self.root = False
+		self.root, self.nocache = False, False
 
 	def getattr(self, path):
 		if path in self.attributes:
@@ -109,7 +106,8 @@ class reader(fuse.Fuse):
 			attributes.st_gid, attributes.st_uid = gid, uid
 			attributes.st_nlink = (directory and 2 or 1)
 			# caching attributes for future calls
-			self.attributes[path] = attributes
+			if not self.nocache:
+				self.attributes[path] = attributes
 			return attributes
 
 	def readdir(self, path, offset):
@@ -124,7 +122,8 @@ class reader(fuse.Fuse):
 				if isReg(item.mode) or isDir(item.mode)
 			]
 			# caching items for future calls
-			self.items[path] = set(items)
+			if not self.nocache:
+				self.items[path] = set(items)
 			for item in items:
 				yield fuse.Direntry(item)
 
@@ -161,9 +160,14 @@ server = reader()
 server.parser.add_option(
 	"-r", "--root",
 	action="store_true",
-	default=False,
 	dest="root",
 	help="access to root (default to /sdcard)"
+)
+server.parser.add_option(
+	"-n", "--nocache",
+	action="store_true",
+	dest="nocache",
+	help="do not cache data (default use cached data)"
 )
 server.parse(values=server)
 
