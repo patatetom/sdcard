@@ -13,12 +13,12 @@ well as `USB Debugging`. the key present in the script must be authorized on the
 
 ### on system side
 
-- Debian
+- Debian 12 (bookworm)
 
 ```shell
 # as root
 apt update
-apt install curl fuse3 python3.11 python3.11-venv unzip
+apt install curl fuse3 libusb-1.0-0 python3.11 python3.11-venv unzip
 curl -L https://github.com/patatetom/sdcard/archive/refs/heads/main.zip > /tmp/sdcard.zip
 unzip -d /opt /tmp/sdcard.zip 
 mv /opt/sdcard-main /opt/android
