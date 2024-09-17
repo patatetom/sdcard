@@ -15,7 +15,7 @@ well as `USB Debugging`. the key present in the script must be authorized on the
 
 - Debian
 
-```console
+```shell
 # as root
 apt update
 apt install curl fuse3 python3.11 python3.11-venv unzip
@@ -26,7 +26,7 @@ python3 -m venv /opt/android
 /opt/android/bin/python3 -m pip install -r /opt/android/requirement.txt 
 ```
 
-```console
+```shell
 # as user
 mkdir /tmp/mountpoint
 /opt/android/bin/python3 /opt/android/sdcard /tmp/mountpoint
