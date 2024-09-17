@@ -17,7 +17,7 @@
 >
 > _Android tools (eg. `adb`) are not necessary, `adb_shell` is totally independent of them._
 
-- Archlinux
+- Archlinux (2024.09.01)
 
 ```shell
 # as root, install system dependencies if not already installed
@@ -68,6 +68,19 @@ umount /tmp/mountpoint
 
 
 ### on user side
+
+> _system dependencies (`fuse`, `libusb` and `python`) are still required_
+
+```shell
+curl -L https://github.com/patatetom/sdcard/archive/refs/heads/main.zip > /tmp/sdcard.zip
+python3 -m zipfile -e /tmp/sdcard.zip ~/venv/
+mv ~/venv/sdcard-main ~/venv/android
+~/venv/android/bin/python3 -m pip install -r ~/venv/android/requirement.txt
+mkdir /tmp/mountpoint
+~/venv/android/bin/python3 ~/venv/android/sdcard /tmp/mountpoint
+ls -l /tmp/mountpoint
+umount /tmp/mountpoint
+```
 
 
 ## usage
