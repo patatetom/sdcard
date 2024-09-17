@@ -13,7 +13,31 @@ well as `USB Debugging`. the key present in the script must be authorized on the
 
 ### on system side
 
-- Debian 12 (bookworm)
+> _these are installation examples, other ways of doing things are possible._
+
+- Archlinux
+
+```shell
+# as root
+pacman -Sy
+pacman -S fuse3 python3 unzip
+ln -s fusermount3 /usr/bin/fusermount
+curl -L https://github.com/patatetom/sdcard/archive/refs/heads/main.zip > /tmp/sdcard.zip
+unzip -d /opt /tmp/sdcard.zip 
+mv /opt/sdcard-main /opt/android
+python3 -m venv /opt/android
+/opt/android/bin/python3 -m pip install -r /opt/android/requirement.txt
+```
+
+```shell
+# as user
+mkdir /tmp/mountpoint
+/opt/android/bin/python3 /opt/android/sdcard /tmp/mountpoint
+ls -l /tmp/mountpoint
+umount /tmp/mountpoint
+```
+
+- Debian (12/bookworm)
 
 ```shell
 # as root
