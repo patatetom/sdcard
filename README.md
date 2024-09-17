@@ -22,13 +22,13 @@
 ```shell
 # as root, install system dependencies if not already installed
 pacman -Sy
-pacman -S fuse3 python3 unzip
+pacman -S fuse3 python3
 ln -s fusermount3 /usr/bin/fusermount
 ```
 ```shell
 # as root, install Python virtual environment
 curl -L https://github.com/patatetom/sdcard/archive/refs/heads/main.zip > /tmp/sdcard.zip
-unzip -d /opt /tmp/sdcard.zip 
+python3 -m zipfile -e /tmp/sdcard.zip /opt
 mv /opt/sdcard-main /opt/android
 python3 -m venv /opt/android
 /opt/android/bin/python3 -m pip install -r /opt/android/requirement.txt
@@ -47,12 +47,12 @@ umount /tmp/mountpoint
 ```shell
 # as root, install system dependencies if not already installed
 apt update
-apt install curl fuse3 libusb-1.0-0 python3.11 python3.11-venv unzip
+apt install curl fuse3 libusb-1.0-0 python3.11 python3.11-venv
 ```
 ```shell
 # as root, install Python virtual environment
 curl -L https://github.com/patatetom/sdcard/archive/refs/heads/main.zip > /tmp/sdcard.zip
-unzip -d /opt /tmp/sdcard.zip 
+python3 -m zipfile -e /tmp/sdcard.zip /opt
 mv /opt/sdcard-main /opt/android
 python3 -m venv /opt/android
 /opt/android/bin/python3 -m pip install -r /opt/android/requirement.txt 
