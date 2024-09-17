@@ -11,11 +11,12 @@
 
 ## installation
 
-### on system side
-
 > _these are installation examples, other ways of doing things are possible._
 >
 > _Android tools (eg. `adb`) are not necessary, `adb_shell` is totally independent of them._
+
+
+### on system side
 
 - Archlinux (2024.09.01)
 
