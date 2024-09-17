@@ -13,6 +13,27 @@ well as `USB Debugging`. the key present in the script must be authorized on the
 
 ### on system side
 
+- Debian
+
+```console
+# as root
+apt update
+apt install curl fuse3 python3.11 python3.11-venv unzip
+curl -L https://github.com/patatetom/sdcard/archive/refs/heads/main.zip > /tmp/sdcard.zip
+unzip -d /opt /tmp/sdcard.zip 
+mv /opt/sdcard-main /opt/android
+python3 -m venv /opt/android
+/opt/android/bin/python3 -m pip install -r /opt/android/requirement.txt 
+```
+
+```console
+# as user
+mkdir /tmp/mountpoint
+/opt/android/bin/python3 /opt/android/sdcard /tmp/mountpoint
+ls -l /tmp/mountpoint
+umount /tmp/mountpoint
+```
+
 
 ### on user side
 
