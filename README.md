@@ -3,8 +3,8 @@
 
 `sdcard` is a Python script that uses `adb_shell` and `fuse-python` (eg. BSD/Linux/OS-X only) to give fast read-only access to the `/sdcard/` (pseudo-)folder of an Android system.
 
-the Android system accessed must have `Developer Options` enabled, as
-well as `USB Debugging`. the key present in the script must be authorized on the Android side.
+**the Android system accessed must have `Developer Options` enabled, as well as `USB Debugging`.**
+**the key present in the script must be authorized on the Android side.**
 
 > _another key pair can be generated if required (see [source code](https://github.com/patatetom/sdcard/blob/main/sdcard#L12))_.
 
@@ -14,14 +14,19 @@ well as `USB Debugging`. the key present in the script must be authorized on the
 ### on system side
 
 > _these are installation examples, other ways of doing things are possible._
+>
+> _Android tools (eg. `adb`) are not necessary, `adb_shell` is totally independent of them._
 
 - Archlinux
 
 ```shell
-# as root
+# as root, install system dependencies if not already installed
 pacman -Sy
 pacman -S fuse3 python3 unzip
 ln -s fusermount3 /usr/bin/fusermount
+```
+```shell
+# as root, install Python virtual environment
 curl -L https://github.com/patatetom/sdcard/archive/refs/heads/main.zip > /tmp/sdcard.zip
 unzip -d /opt /tmp/sdcard.zip 
 mv /opt/sdcard-main /opt/android
@@ -30,7 +35,7 @@ python3 -m venv /opt/android
 ```
 
 ```shell
-# as user
+# as user, run/test Python script
 mkdir /tmp/mountpoint
 /opt/android/bin/python3 /opt/android/sdcard /tmp/mountpoint
 ls -l /tmp/mountpoint
@@ -40,9 +45,12 @@ umount /tmp/mountpoint
 - Debian (12/bookworm)
 
 ```shell
-# as root
+# as root, install system dependencies if not already installed
 apt update
 apt install curl fuse3 libusb-1.0-0 python3.11 python3.11-venv unzip
+```
+```shell
+# as root, install Python virtual environment
 curl -L https://github.com/patatetom/sdcard/archive/refs/heads/main.zip > /tmp/sdcard.zip
 unzip -d /opt /tmp/sdcard.zip 
 mv /opt/sdcard-main /opt/android
@@ -51,7 +59,7 @@ python3 -m venv /opt/android
 ```
 
 ```shell
-# as user
+# as user, run/test Python script
 mkdir /tmp/mountpoint
 /opt/android/bin/python3 /opt/android/sdcard /tmp/mountpoint
 ls -l /tmp/mountpoint
@@ -60,9 +68,6 @@ umount /tmp/mountpoint
 
 
 ### on user side
-
-
-> _Android tools (eg. `adb`) are not necessary, `adb_shell` is totally independent of them._
 
 
 ## usage
