@@ -86,6 +86,8 @@ umount /tmp/mountpoint
 
 ## usage
 
+> _it's important to note that, by default, `sdcard` remembers the contents (metadata) of visited folders :_
+> _in other words, the addition, deletion or modification on the smartphone side of a previously visited file will not be reflected by `sdcard`, unless you use the `-n` option._
 
 ## links
 - [adb_shell](https://github.com/JeffLIrion/adb_shell)
