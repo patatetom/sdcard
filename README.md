@@ -141,6 +141,45 @@ umount /tmp/mountpoint
 
 > _the second command `ls … #2` above does not reread the contents of the root folder, but uses the data cached by the first call to the command `ls … #1` : if changes have occurred on the Android system side in the meantime, these are not reflected. use the option `--nocache` to force rereading of information._
 
+```shell
+mkdir -p /tmp/mountpoint
+~/venv/android/bin/python3 ~/venv/android/sdcard --root /tmp/mountpoint
+ls /tmp/mountpoint/
+# acct  apex  config  data  debug_ramdisk  dev  lost+found  mnt  odm  odm_dlkm  oem  proc  product  second_stage_resources  storage  sys	system	system_ext  vendor  vendor_dlkm
+ls -l /tmp/mountpoint/
+total 0
+# dr-xr-x--- 2 nobody nogroup 0 Jan  1  2009 acct
+# dr-xr-x--- 2 nobody nogroup 0 Jun 18  1973 apex
+# dr-xr-x--- 2 nobody nogroup 0 Jan  1  1970 config
+# dr-xr-x--- 2 nobody nogroup 0 Sep  8 15:34 data
+# dr-xr-x--- 2 nobody nogroup 0 Jan  1  2009 debug_ramdisk
+# dr-xr-x--- 2 nobody nogroup 0 Sep 10 15:00 dev
+# dr-xr-x--- 2 nobody nogroup 0 Jan  1  2009 lost+found
+# dr-xr-x--- 2 nobody nogroup 0 Jun 18  1973 mnt
+# dr-xr-x--- 2 nobody nogroup 0 Jan  1  2009 odm
+# dr-xr-x--- 2 nobody nogroup 0 Jan  1  2009 odm_dlkm
+# dr-xr-x--- 2 nobody nogroup 0 Jan  1  2009 oem
+# dr-xr-x--- 2 nobody nogroup 0 Jan  1  1970 proc
+# dr-xr-x--- 2 nobody nogroup 0 Jan  1  2009 product
+# dr-xr-x--- 2 nobody nogroup 0 Jan  1  2009 second_stage_resources
+# dr-xr-x--- 2 nobody nogroup 0 Jun 18  1973 storage
+# dr-xr-x--- 2 nobody nogroup 0 Jan  1  1970 sys
+# dr-xr-x--- 2 nobody nogroup 0 Jan  1  2009 system
+# dr-xr-x--- 2 nobody nogroup 0 Jan  1  2009 system_ext
+# dr-xr-x--- 2 nobody nogroup 0 Jan  1  2009 vendor
+# dr-xr-x--- 2 nobody nogroup 0 Jan  1  2009 vendor_dlkm
+ls -l /tmp/mountpoint/storage/emulated/0/
+total 0
+# dr-xr-x--- 2 nobody nogroup 0 Mar 22 03:00  Alarms
+# dr-xr-x--- 2 nobody nogroup 0 Mar 22 03:00  Android
+# dr-xr-x--- 2 nobody nogroup 0 Mar 22 03:00  Audiobooks
+# dr-xr-x--- 2 nobody nogroup 0 Jun 11 09:31  DCIM
+…
+umount /tmp/mountpoint
+```
+
+> _`-r`/`--root` option gives access to the root of the Android system._
+
 
 ## links
 - [adb_shell](https://github.com/JeffLIrion/adb_shell)
