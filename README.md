@@ -33,7 +33,7 @@ curl -L https://github.com/patatetom/sdcard/archive/refs/heads/main.zip > /tmp/s
 python3 -m zipfile -e /tmp/sdcard.zip /opt
 mv /opt/sdcard-main /opt/android
 python3 -m venv /opt/android
-/opt/android/bin/python3 -m pip install -r /opt/android/requirement.txt
+/opt/android/bin/python3 -m pip install -r /opt/android/requirements.txt
 ```
 
 ```shell
@@ -60,7 +60,7 @@ curl -L https://github.com/patatetom/sdcard/archive/refs/heads/main.zip > /tmp/s
 python3 -m zipfile -e /tmp/sdcard.zip /opt
 mv /opt/sdcard-main /opt/android
 python3 -m venv /opt/android
-/opt/android/bin/python3 -m pip install -r /opt/android/requirement.txt 
+/opt/android/bin/python3 -m pip install -r /opt/android/requirements.txt
 ```
 
 ```shell
@@ -84,7 +84,7 @@ curl -L https://github.com/patatetom/sdcard/archive/refs/heads/main.zip > /tmp/s
 python3 -m zipfile -e /tmp/sdcard.zip ~/venv/
 mv ~/venv/sdcard-main ~/venv/android
 python3 -m venv ~/venv/android
-~/venv/android/bin/python3 -m pip install -r ~/venv/android/requirement.txt
+~/venv/android/bin/python3 -m pip install -r ~/venv/android/requirements.txt
 mkdir /tmp/mountpoint
 ~/venv/android/bin/python3 ~/venv/android/sdcard /tmp/mountpoint
 ls -l /tmp/mountpoint
