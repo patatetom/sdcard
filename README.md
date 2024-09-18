@@ -17,7 +17,7 @@
 > _Android tools (eg. `adb`) are not necessary, `adb_shell` is totally independent of them._
 
 
-### on system side
+### system side
 
 - Archlinux (2024.09.01)
 
@@ -69,7 +69,7 @@ umount /tmp/mountpoint
 ```
 
 
-### on user side
+### user side
 
 > _system dependencies (`fuse`, `libusb` and `python`) are still required_
 
@@ -90,6 +90,46 @@ umount /tmp/mountpoint
 
 > _it's important to note that, by default, `sdcard` remembers the contents (metadata) of visited folders :_
 > _in other words, the addition, deletion or modification on the smartphone side of a previously visited location will not be reflected by `sdcard`, unless you use the `-n` option._
+>
+> _the examples below are taken from the user side installation above._
+
+```shell
+~/venv/android/bin/python3 ~/venv/android/sdcard --help
+Usage: sdcard [mountpoint] [options]
+
+Options:
+    -h, --help             show this help message and exit
+    -o opt,[opt...]        mount options
+    -r, --root             access to root (default to /sdcard)
+    -n, --nocache          do not cache data (default use cached data)
+FUSE options:
+…
+```
+```shell
+mkdir -p /tmp/mountpoint
+~/venv/android/bin/python3 ~/venv/android/sdcard /tmp/mountpoint 
+ls /tmp/mountpoint/
+# Alarms   Android   Audiobooks	 DCIM   Documents   Download   Movies   Music   Notifications   Pictures   Podcasts   Recordings   Ringtones   storage
+ls -l /tmp/mountpoint/
+total 0
+# dr-xr-x--- 2 nobody nogroup 0 Mar 22 03:00  Alarms
+# dr-xr-x--- 2 nobody nogroup 0 Mar 22 03:00  Android
+# dr-xr-x--- 2 nobody nogroup 0 Mar 22 03:00  Audiobooks
+# dr-xr-x--- 2 nobody nogroup 0 Jun 11 09:31  DCIM
+# dr-xr-x--- 2 nobody nogroup 0 Aug 28 16:18  Documents
+# dr-xr-x--- 2 nobody nogroup 0 Sep 18 05:39  Download
+# dr-xr-x--- 2 nobody nogroup 0 May 19 19:14  Movies
+# dr-xr-x--- 2 nobody nogroup 0 May 20 06:53  Music
+# dr-xr-x--- 2 nobody nogroup 0 Mar 22 03:00  Notifications
+# dr-xr-x--- 2 nobody nogroup 0 Aug 10 22:38  Pictures
+# dr-xr-x--- 2 nobody nogroup 0 Mar 22 03:00  Podcasts
+# dr-xr-x--- 2 nobody nogroup 0 Mar 28 16:52  Recordings
+# dr-xr-x--- 2 nobody nogroup 0 Mar 22 03:00  Ringtones
+# dr-xr-x--- 2 nobody nogroup 0 Sep  6 23:02  storage
+tar -C /tmp/mountpoint/ -cz . > /tmp/backup.tar.gz
+umount /tmp/mountpoint
+```
+
 
 ## links
 - [adb_shell](https://github.com/JeffLIrion/adb_shell)
