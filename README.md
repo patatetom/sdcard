@@ -1,7 +1,8 @@
 # sdcard
-**RO access to the SD card of an Android smartphone**
 
-`sdcard` is a Python script that uses `adb_shell` and `fuse-python` (eg. BSD/Linux/OS-X only) to give fast read-only access to the `/sdcard/` (pseudo-)folder (eg. downloads, photos, etc...) of an Android system.
+**USB read-only access to SD card on Android system**
+
+`sdcard` is a Python script that uses `adb_shell`, `fuse-python` (eg. BSD/Linux/OS-X only) and `libusb` to give fast read-only access to the `/sdcard/` (pseudo-)folder (eg. downloads, photos, etc...) of an Android system.
 
 > _**the Android system accessed must have `Developer Options` enabled, as well as `USB Debugging`.**_
 > _**the key present in the script must be authorized on the Android side.**_
@@ -87,8 +88,9 @@ umount /tmp/mountpoint
 ## usage
 
 > _it's important to note that, by default, `sdcard` remembers the contents (metadata) of visited folders :_
-> _in other words, the addition, deletion or modification on the smartphone side of a previously visited file will not be reflected by `sdcard`, unless you use the `-n` option._
+> _in other words, the addition, deletion or modification on the smartphone side of a previously visited location will not be reflected by `sdcard`, unless you use the `-n` option._
 
 ## links
 - [adb_shell](https://github.com/JeffLIrion/adb_shell)
 - [fuse-python](https://github.com/libfuse/python-fuse)
+- [libusb](https://github.com/karpierz/libusb)
