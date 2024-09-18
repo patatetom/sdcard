@@ -2,7 +2,7 @@
 
 **USB read-only access to SD card on Android system**
 
-`sdcard` is a Python script that uses `adb_shell`, `fuse-python` (eg. BSD/Linux/OS-X only) and `libusb` to give fast read-only access to the `/sdcard/` (pseudo-)folder (eg. downloads, photos, etc...) of an Android system.
+`sdcard` is a Python script that uses `adb_shell`, `fuse-python` (eg. BSD/Linux/OS-X only) and `libusb` to give fast USB read-only access to the `/sdcard/` (pseudo-)folder (eg. downloads, photos, etc...) of an Android system.
 
 > _**the Android system accessed must have `Developer Options` [enabled](https://developer.android.com/studio/debug/dev-options), as well as `USB Debugging`.**_
 > _**the key present in the script must be authorized on the Android side.**_
