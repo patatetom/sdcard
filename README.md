@@ -98,7 +98,7 @@ umount /tmp/mountpoint
 ## usage
 
 > _it's important to note that, by default, `sdcard` remembers the contents (metadata) of visited folders :_
-> _in other words, the addition, deletion or modification on the smartphone side of a previously visited location will not be reflected by `sdcard`, unless you use the `-n` option._
+> _in other words, the addition, deletion or modification on the Android system side of a previously visited location will not be reflected by `sdcard`, unless you use the `-n` option._
 >
 > _the examples below are taken from the user side installation above._
 
@@ -116,10 +116,10 @@ FUSE options:
 ```
 ```shell
 mkdir -p /tmp/mountpoint
-~/venv/android/bin/python3 ~/venv/android/sdcard /tmp/mountpoint 
-ls /tmp/mountpoint/
+~/venv/android/bin/python3 ~/venv/android/sdcard /tmp/mountpoint
+ls /tmp/mountpoint/ #1
 # Alarms   Android   Audiobooks	 DCIM   Documents   Download   Movies   Music   Notifications   Pictures   Podcasts   Recordings   Ringtones   storage
-ls -l /tmp/mountpoint/
+ls -l /tmp/mountpoint/ #2
 total 0
 # dr-xr-x--- 2 nobody nogroup 0 Mar 22 03:00  Alarms
 # dr-xr-x--- 2 nobody nogroup 0 Mar 22 03:00  Android
@@ -138,6 +138,8 @@ total 0
 tar -C /tmp/mountpoint/ -cz . > /tmp/backup.tar.gz
 umount /tmp/mountpoint
 ```
+
+> _the second command `ls … #2` does not reread the contents of the root folder, but uses the data cached by the first call to the command `ls … #1` : if changes have occurred on the Android system side, these are not reflected. use the option `--nocache` to force rereading of information._
 
 
 ## links
