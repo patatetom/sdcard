@@ -109,8 +109,8 @@ Usage: sdcard [mountpoint] [options]
 Options:
     -h, --help             show this help message and exit
     -o opt,[opt...]        mount options
-    -r, --root             access to root (default to /sdcard)
-    -n, --nocache          do not cache data (default use cached data)
+    -r, --root             access from / (default from /sdcard)
+    -n, --nocache          do not cache data (default cache data)
 FUSE options:
 …
 ```
