@@ -161,13 +161,13 @@ server.parser.add_option(
 	"-r", "--root",
 	action="store_true",
 	dest="root",
-	help="access to root (default to /sdcard)"
+	help="access from / (default from /sdcard)"
 )
 server.parser.add_option(
 	"-n", "--nocache",
 	action="store_true",
 	dest="nocache",
-	help="do not cache data (default use cached data)"
+	help="do not cache data (default cache data)"
 )
 server.parse(values=server)
 
