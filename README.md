@@ -41,6 +41,9 @@ python3 -m venv /opt/android
 mkdir /tmp/mountpoint
 /opt/android/bin/python3 /opt/android/sdcard /tmp/mountpoint
 ls -l /tmp/mountpoint
+# …
+# dr-xr-x--- 2 nobody nogroup 0 Jun 11 09:31  DCIM
+# …
 umount /tmp/mountpoint
 ```
 
@@ -65,6 +68,9 @@ python3 -m venv /opt/android
 mkdir /tmp/mountpoint
 /opt/android/bin/python3 /opt/android/sdcard /tmp/mountpoint
 ls -l /tmp/mountpoint
+# …
+# dr-xr-x--- 2 nobody nogroup 0 Jun 11 09:31  DCIM
+# …
 umount /tmp/mountpoint
 ```
 
@@ -82,6 +88,9 @@ python3 -m venv ~/venv/android
 mkdir /tmp/mountpoint
 ~/venv/android/bin/python3 ~/venv/android/sdcard /tmp/mountpoint
 ls -l /tmp/mountpoint
+# …
+# dr-xr-x--- 2 nobody nogroup 0 Jun 11 09:31  DCIM
+# …
 umount /tmp/mountpoint
 ```
 
