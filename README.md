@@ -4,10 +4,10 @@
 
 `sdcard` is a Python script that uses `adb_shell`, `fuse-python` (eg. BSD/Linux/OS-X only) and `libusb` to give fast read-only access to the `/sdcard/` (pseudo-)folder (eg. downloads, photos, etc...) of an Android system.
 
-> _**the Android system accessed must have `Developer Options` enabled, as well as `USB Debugging`.**_
+> _**the Android system accessed must have `Developer Options` [enabled](https://developer.android.com/studio/debug/dev-options), as well as `USB Debugging`.**_
 > _**the key present in the script must be authorized on the Android side.**_
 >
-> _another key pair can be generated if required (see [source code](https://github.com/patatetom/sdcard/blob/main/sdcard#L12))_.
+> _another key pair can be generated if [required](https://github.com/patatetom/sdcard/blob/main/sdcard#L12)._
 
 
 ## installation
@@ -98,7 +98,7 @@ umount /tmp/mountpoint
 ## usage
 
 > _it's important to note that, by default, `sdcard` remembers the contents (metadata) of visited folders :_
-> _in other words, the addition, deletion or modification on the Android system side of a previously visited location will not be reflected by `sdcard`, unless you use the `-n` option._
+> _in other words, modifications on the Android system side of a previously visited location will not be reflected by `sdcard`, unless you use the `-n` option._
 >
 > _the examples below are taken from the user side installation above._
 
@@ -139,7 +139,7 @@ tar -C /tmp/mountpoint/ -cz . > /tmp/backup.tar.gz
 umount /tmp/mountpoint
 ```
 
-> _the second command `ls … #2` does not reread the contents of the root folder, but uses the data cached by the first call to the command `ls … #1` : if changes have occurred on the Android system side, these are not reflected. use the option `--nocache` to force rereading of information._
+> _the second command `ls … #2` above does not reread the contents of the root folder, but uses the data cached by the first call to the command `ls … #1` : if changes have occurred on the Android system side in the meantime, these are not reflected. use the option `--nocache` to force rereading of information._
 
 
 ## links
