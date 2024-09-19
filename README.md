@@ -39,7 +39,7 @@ python3 -m venv /opt/android
 ```shell
 # as user, run/test Python script
 mkdir /tmp/mountpoint
-/opt/android/bin/python3 -m sdcard /tmp/mountpoint
+( cd /opt/android && ./bin/python3 -m sdcard /tmp/mountpoint )
 ls -l /tmp/mountpoint
 # …
 # dr-xr-x--- 2 nobody nogroup 0 Jun 11 09:31  DCIM
@@ -66,7 +66,7 @@ python3 -m venv /opt/android
 ```shell
 # as user, run/test Python script
 mkdir /tmp/mountpoint
-/opt/android/bin/python3 -m sdcard /tmp/mountpoint
+( cd /opt/android && ./bin/python3 -m sdcard /tmp/mountpoint )
 ls -l /tmp/mountpoint
 # …
 # dr-xr-x--- 2 nobody nogroup 0 Jun 11 09:31  DCIM
@@ -86,7 +86,7 @@ mv ~/venv/sdcard-main ~/venv/android
 python3 -m venv ~/venv/android
 ~/venv/android/bin/python3 -m pip install -r ~/venv/android/requirements.txt
 mkdir /tmp/mountpoint
-~/venv/android/bin/python3 -m sdcard /tmp/mountpoint
+( cd ~/venv/android && ./bin/python3 -m sdcard /tmp/mountpoint )
 ls -l /tmp/mountpoint
 # …
 # dr-xr-x--- 2 nobody nogroup 0 Jun 11 09:31  DCIM
