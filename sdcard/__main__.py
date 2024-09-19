@@ -193,3 +193,6 @@ while not device.available:
 
 server.main()
 device.close()
+
+def main():
+    pass
