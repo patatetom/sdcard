@@ -39,7 +39,7 @@ python3 -m venv /opt/android
 ```shell
 # as user, run/test Python script
 mkdir /tmp/mountpoint
-/opt/android/bin/python3 /opt/android/sdcard /tmp/mountpoint
+/opt/android/bin/python3 -m sdcard /tmp/mountpoint
 ls -l /tmp/mountpoint
 # …
 # dr-xr-x--- 2 nobody nogroup 0 Jun 11 09:31  DCIM
@@ -66,7 +66,7 @@ python3 -m venv /opt/android
 ```shell
 # as user, run/test Python script
 mkdir /tmp/mountpoint
-/opt/android/bin/python3 /opt/android/sdcard /tmp/mountpoint
+/opt/android/bin/python3 -m sdcard /tmp/mountpoint
 ls -l /tmp/mountpoint
 # …
 # dr-xr-x--- 2 nobody nogroup 0 Jun 11 09:31  DCIM
@@ -86,7 +86,7 @@ mv ~/venv/sdcard-main ~/venv/android
 python3 -m venv ~/venv/android
 ~/venv/android/bin/python3 -m pip install -r ~/venv/android/requirements.txt
 mkdir /tmp/mountpoint
-~/venv/android/bin/python3 ~/venv/android/sdcard /tmp/mountpoint
+~/venv/android/bin/python3 -m sdcard /tmp/mountpoint
 ls -l /tmp/mountpoint
 # …
 # dr-xr-x--- 2 nobody nogroup 0 Jun 11 09:31  DCIM
@@ -103,7 +103,7 @@ umount /tmp/mountpoint
 > _the examples below are taken from the user side installation above._
 
 ```shell
-~/venv/android/bin/python3 ~/venv/android/sdcard --help
+~/venv/android/bin/python3 -m sdcard --help
 Usage: sdcard [mountpoint] [options]
 
 Options:
@@ -116,7 +116,7 @@ FUSE options:
 ```
 ```shell
 mkdir -p /tmp/mountpoint
-~/venv/android/bin/python3 ~/venv/android/sdcard /tmp/mountpoint
+~/venv/android/bin/python3 -m sdcard /tmp/mountpoint
 ls /tmp/mountpoint/ #1
 # Alarms   Android   Audiobooks	 DCIM   Documents   Download   Movies   Music   Notifications   Pictures   Podcasts   Recordings   Ringtones   storage
 ls -l /tmp/mountpoint/ #2
@@ -143,7 +143,7 @@ umount /tmp/mountpoint
 
 ```shell
 mkdir -p /tmp/mountpoint
-~/venv/android/bin/python3 ~/venv/android/sdcard --root /tmp/mountpoint
+~/venv/android/bin/python3 -m sdcard --root /tmp/mountpoint
 ls /tmp/mountpoint/
 # acct  apex  config  data  debug_ramdisk  dev  lost+found  mnt  odm  odm_dlkm  oem  proc  product  second_stage_resources  storage  sys	system	system_ext  vendor  vendor_dlkm
 ls -l /tmp/mountpoint/
