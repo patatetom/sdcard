@@ -52,7 +52,7 @@ umount /tmp/mountpoint
 ```shell
 # as root, install system dependencies if not already installed
 apt update
-apt install curl fuse3 libusb-1.0-0 python3.11 python3.11-venv
+apt install curl fuse3 libusb-1.0-0 python3 python3-venv
 ```
 ```shell
 # as root, install Python virtual environment
