@@ -1,0 +1,33 @@
+[build-system]
+requires = ["setuptools", "setuptools_scm[toml]"]
+
+[tool.setuptools.packages.find]
+# venv folders
+exclude = ["bin",  "include",  "lib",  "lib64"]
+
+[project]
+name = "sdcard"
+description = "USB read-only access to SD card on Android system"
+readme = "README.md"
+dynamic = ["version"]
+# sed -e 's/^/"/g' -e 's/$/",/g' requirement.txt
+dependencies = [
+"adb_shell==0.4.4",
+"cffi==1.17.1",
+"cryptography==43.0.1",
+"fuse-python==1.0.8",
+"libusb1==3.1.0",
+"pyasn1==0.6.1",
+"pycparser==2.22",
+"rsa==4.9",
+]
+requires-python = ">=3"
+
+[project.scripts]
+sdcard = "sdcard:__main__.main"
+
+[project.urls]
+Homepage = "https://github.com/patatetom/sdcard/"
+
+[tool.setuptools_scm]
+write_to = "_version.py"

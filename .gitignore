@@ -1,4 +1,7 @@
 bin/
+build/
 lib/
+sdcard.egg-info/
 lib64
 pyvenv.cfg
+_version.py
