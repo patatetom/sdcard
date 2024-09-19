@@ -36,7 +36,7 @@ apt update
 apt install fuse3 libusb-1.0-0 python3 python3-venv
 ```
 
-- and then
+- and then, still on the system being configured...
 
 
 ```shell
@@ -50,9 +50,17 @@ python3 -m venv /opt/android
 
 > _system dependencies (`fuse`, `libusb` and `python`) are still required_
 
+- manually
+
 ```shell
 python3 -m venv ~/venv/android
 ~/venv/android/bin/python3 -m pip install https://github.com/patatetom/sdcard/archive/refs/heads/main.zip
+```
+
+- pipx
+
+```shell
+pipx install https://github.com/patatetom/sdcard/archive/refs/heads/main.zip
 ```
 
 
@@ -100,7 +108,7 @@ tar -C /tmp/mountpoint/ -cz . > /tmp/backup.tar.gz
 umount /tmp/mountpoint
 ```
 
-> _the second command `ls … #2` above does not reread the contents of the root folder, but uses the data cached by the first call to the command `ls … #1` : if changes have occurred on the Android system side in the meantime, these are not reflected. use the option `--nocache` to force rereading of information._
+> _the second command `ls … #2` above does not reread the contents of the root folder, but uses the data cached by the first call to the command `ls … #1` : if changes have occurred on the Android system side in the meantime, these are not reflected. use the option `--nocache` to force rereading of informations._
 
 ```shell
 mkdir -p /tmp/mountpoint
@@ -146,3 +154,4 @@ umount /tmp/mountpoint
 - [adb_shell](https://github.com/JeffLIrion/adb_shell)
 - [fuse-python](https://github.com/libfuse/python-fuse)
 - [libusb](https://github.com/karpierz/libusb)
+- [pipx](https://github.com/pypa/pipx)
