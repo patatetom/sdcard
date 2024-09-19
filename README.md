@@ -30,16 +30,15 @@ ln -s fusermount3 /usr/bin/fusermount
 ```shell
 # as root, install Python virtual environment
 curl -L https://github.com/patatetom/sdcard/archive/refs/heads/main.zip > /tmp/sdcard.zip
-python3 -m zipfile -e /tmp/sdcard.zip /opt
-mv /opt/sdcard-main /opt/android
+python3 -m zipfile -e /tmp/sdcard.zip /tmp
 python3 -m venv /opt/android
-/opt/android/bin/python3 -m pip install -r /opt/android/requirements.txt
+/opt/android/bin/python3 -m pip install -e /tmp/sdcard-main
 ```
 
 ```shell
 # as user, run/test Python script
 mkdir /tmp/mountpoint
-( cd /opt/android && ./bin/python3 -m sdcard /tmp/mountpoint )
+/opt/android/bin/python3 -m sdcard /tmp/mountpoint
 ls -l /tmp/mountpoint
 # …
 # dr-xr-x--- 2 nobody nogroup 0 Jun 11 09:31  DCIM
