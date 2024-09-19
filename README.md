@@ -27,48 +27,22 @@ pacman -Sy
 pacman -S fuse3 python3
 ln -s fusermount3 /usr/bin/fusermount
 ```
-```shell
-# as root, install Python virtual environment
-python3 -m venv /opt/android
-/opt/android/bin/python3 -m pip install https://github.com/patatetom/sdcard/archive/refs/heads/main.zip
-```
-
-```shell
-# as user, run/test Python script
-mkdir /tmp/mountpoint
-/opt/android/bin/sdcard /tmp/mountpoint
-ls -l /tmp/mountpoint
-# …
-# dr-xr-x--- 2 nobody nogroup 0 Jun 11 09:31  DCIM
-# …
-umount /tmp/mountpoint
-```
 
 - Debian (12/bookworm)
 
 ```shell
 # as root, install system dependencies if not already installed
 apt update
-apt install curl fuse3 libusb-1.0-0 python3 python3-venv
-```
-```shell
-# as root, install Python virtual environment
-curl -L https://github.com/patatetom/sdcard/archive/refs/heads/main.zip > /tmp/sdcard.zip
-python3 -m zipfile -e /tmp/sdcard.zip /opt
-mv /opt/sdcard-main /opt/android
-python3 -m venv /opt/android
-/opt/android/bin/python3 -m pip install -r /opt/android/requirements.txt
+apt install fuse3 libusb-1.0-0 python3 python3-venv
 ```
 
+- and then
+
+
 ```shell
-# as user, run/test Python script
-mkdir /tmp/mountpoint
-( cd /opt/android && ./bin/python3 -m sdcard /tmp/mountpoint )
-ls -l /tmp/mountpoint
-# …
-# dr-xr-x--- 2 nobody nogroup 0 Jun 11 09:31  DCIM
-# …
-umount /tmp/mountpoint
+# as root, install Python virtual environment
+python3 -m venv /opt/android
+/opt/android/bin/python3 -m pip install https://github.com/patatetom/sdcard/archive/refs/heads/main.zip
 ```
 
 
@@ -77,18 +51,8 @@ umount /tmp/mountpoint
 > _system dependencies (`fuse`, `libusb` and `python`) are still required_
 
 ```shell
-curl -L https://github.com/patatetom/sdcard/archive/refs/heads/main.zip > /tmp/sdcard.zip
-python3 -m zipfile -e /tmp/sdcard.zip ~/venv/
-mv ~/venv/sdcard-main ~/venv/android
 python3 -m venv ~/venv/android
-~/venv/android/bin/python3 -m pip install -r ~/venv/android/requirements.txt
-mkdir /tmp/mountpoint
-( cd ~/venv/android && ./bin/python3 -m sdcard /tmp/mountpoint )
-ls -l /tmp/mountpoint
-# …
-# dr-xr-x--- 2 nobody nogroup 0 Jun 11 09:31  DCIM
-# …
-umount /tmp/mountpoint
+~/venv/android/bin/python3 -m pip install https://github.com/patatetom/sdcard/archive/refs/heads/main.zip
 ```
 
 
@@ -100,7 +64,7 @@ umount /tmp/mountpoint
 > _the examples below are taken from the user side installation above._
 
 ```shell
-~/venv/android/bin/python3 -m sdcard --help
+~/venv/android/bin/sdcard --help
 Usage: sdcard [mountpoint] [options]
 
 Options:
@@ -113,7 +77,7 @@ FUSE options:
 ```
 ```shell
 mkdir -p /tmp/mountpoint
-~/venv/android/bin/python3 -m sdcard /tmp/mountpoint
+~/venv/android/bin/sdcard /tmp/mountpoint
 ls /tmp/mountpoint/ #1
 # Alarms   Android   Audiobooks	 DCIM   Documents   Download   Movies   Music   Notifications   Pictures   Podcasts   Recordings   Ringtones   storage
 ls -l /tmp/mountpoint/ #2
@@ -140,7 +104,7 @@ umount /tmp/mountpoint
 
 ```shell
 mkdir -p /tmp/mountpoint
-~/venv/android/bin/python3 -m sdcard --root /tmp/mountpoint
+~/venv/android/bin/sdcard --root /tmp/mountpoint
 ls /tmp/mountpoint/
 # acct  apex  config  data  debug_ramdisk  dev  lost+found  mnt  odm  odm_dlkm  oem  proc  product  second_stage_resources  storage  sys	system	system_ext  vendor  vendor_dlkm
 ls -l /tmp/mountpoint/
