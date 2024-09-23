@@ -68,7 +68,7 @@ from os import getgid, getuid
 from sys import exit, stderr
 from stat import S_ISDIR as isDir
 from stat import S_ISREG as isReg
-from errno import EACCES as noEntry
+from errno import ENOENT as noEntry
 from errno import EACCES as accessDenied
 from usb1 import USBErrorBusy as busyUSB
 from adb_shell.adb_device import AdbDeviceUsb
