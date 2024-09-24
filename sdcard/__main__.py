@@ -203,8 +203,8 @@ fuse = FUSE(
 	Reader(args.root, args.cache),
 	args.mountpoint,
 	ro = True,
-	foreground = True,
-	debug = True
+	foreground = False,
+	debug = False
 )
 device.close()
 

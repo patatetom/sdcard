@@ -76,15 +76,14 @@ pipx install https://github.com/patatetom/sdcard/archive/fusepy.zip
 
 ```shell
 ~/venv/android/bin/sdcard --help
-Usage: sdcard [mountpoint] [options]
-
-Options:
-    -h, --help             show this help message and exit
-    -o opt,[opt...]        mount options
-    -r, --root             access from / (default from /sdcard)
-    -n, --nocache          do not cache data (default cache data)
-FUSE options:
-…
+usage: sdcard [-h] [-r] [-n] mountpoint
+USB read-only access to SD card on Android system
+positional arguments:
+  mountpoint     Android system mount point
+options:
+  -h, --help     show this help message and exit
+  -r, --root     access from / (default from /sdcard)
+  -n, --nocache  do not cache data (default cache data)
 ```
 ```shell
 mkdir -p /tmp/mountpoint
