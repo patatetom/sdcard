@@ -10,7 +10,7 @@
 > _**the Android system accessed must have `Developer Options` [enabled](https://developer.android.com/studio/debug/dev-options), as well as `USB Debugging`.**_
 > _**the key present in the script must be authorized on the Android side.**_
 >
-> _another key pair can be generated if [required](https://github.com/patatetom/sdcard/blob/main/sdcard#L12)._
+> _another key pair can be generated if [required](https://github.com/patatetom/sdcard/blob/main/sdcard/__main__.py#L12-L16)._
 
 
 ## installation
