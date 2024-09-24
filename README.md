@@ -1,3 +1,6 @@
+🚀 [switch to fuse-python](https://github.com/patatetom/sdcard/tree/main) (default)
+
+
 # sdcard
 
 **USB read-only access to SD card on Android system**
