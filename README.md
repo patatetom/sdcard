@@ -1,3 +1,6 @@
+[switch to fusepy](https://github.com/patatetom/sdcard/tree/fusepy) 🧲
+
+
 # sdcard
 
 **USB read-only access to SD card on Android system**
