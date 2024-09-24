@@ -45,7 +45,7 @@ apt install fuse3 libusb-1.0-0 python3 python3-venv
 ```shell
 # as root, install Python virtual environment
 python3 -m venv /opt/android
-/opt/android/bin/python3 -m pip install https://github.com/patatetom/sdcard/archive/refs/heads/main.zip
+/opt/android/bin/python3 -m pip install https://github.com/patatetom/sdcard/archive/fusepy.zip
 ```
 
 
@@ -57,13 +57,13 @@ python3 -m venv /opt/android
 
 ```shell
 python3 -m venv ~/venv/android
-~/venv/android/bin/python3 -m pip install https://github.com/patatetom/sdcard/archive/refs/heads/main.zip
+~/venv/android/bin/python3 -m pip install https://github.com/patatetom/sdcard/archive/fusepy.zip
 ```
 
 - pipx
 
 ```shell
-pipx install https://github.com/patatetom/sdcard/archive/refs/heads/main.zip
+pipx install https://github.com/patatetom/sdcard/archive/fusepy.zip
 ```
 
 
