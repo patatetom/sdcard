@@ -1,4 +1,4 @@
-[switch to fusepy](https://github.com/patatetom/sdcard/tree/fusepy) 🧲
+🚀 [switch to fusepy](https://github.com/patatetom/sdcard/tree/fusepy)
 
 
 # sdcard
