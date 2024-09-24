@@ -10,12 +10,11 @@ name = "sdcard"
 description = "USB read-only access to SD card on Android system"
 readme = "README.md"
 version = "0.0.1"
-# sed -e 's/^/"/g' -e 's/$/",/g' requirement.txt
 dependencies = [
 "adb_shell>=0.4.4",
 "cffi>=1.17.1",
 "cryptography>=43.0.1",
-"fuse-python>=1.0.8",
+"fusepy>=3.0.1",
 "libusb1>=3.1.0",
 "pyasn1>=0.6.1",
 "pycparser>=2.22",

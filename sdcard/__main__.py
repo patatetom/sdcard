@@ -1,9 +1,24 @@
 #!/usr/bin/env python
 
 
+# /// script
+# requires-python = ">=3"
+# dependencies = [
+# "adb_shell>=0.4.4",
+# "cffi>=1.17.1",
+# "cryptography>=43.0.1",
+# "fusepy>=3.0.1",
+# "libusb1>=3.1.0",
+# "pyasn1>=0.6.1",
+# "pycparser>=2.22",
+# "rsa>=4.9"
+# ]
+# ///
+
+
 # this python code provides read-only access to the /sdcard/ (pseudo)folder
 # on an android smartphone.
-# it uses fuse-python (https://github.com/libfuse/python-fuse) and
+# it uses fusepy (https://github.com/fusepy/fusepy) and
 # adb_shell (https://github.com/JeffLIrion/adb_shell).
 
 
@@ -61,11 +76,11 @@ RT5mop8i3DpB10hlTsP1exnOo2mKAwZ3bQcuyqCeAwotARJT5rxeMAEAAQA=
 
 
 # imports
-import fuse
+import argparse
 from io import BytesIO
 from time import sleep
-from os import getgid, getuid
 from sys import exit, stderr
+from os import getgid, getuid
 from stat import S_ISDIR as isDir
 from stat import S_ISREG as isReg
 from errno import ENOENT as noEntry
@@ -73,47 +88,40 @@ from errno import EACCES as accessDenied
 from usb1 import USBErrorBusy as busyUSB
 from adb_shell.adb_device import AdbDeviceUsb
 from adb_shell.auth.sign_pythonrsa import PythonRSASigner
-from os import O_RDONLY, O_WRONLY, O_RDWR
+from fuse import FUSE, FuseOSError, Operations
 
 
-# new API
-fuse.fuse_python_api = (0, 2)
-# get ids of the current user
-gid, uid = getgid(), getuid()
+class Reader(Operations):
 
+	def __init__(self, root = "/sdcard", cache = True):
+		self.gid, self.uid = getgid(), getuid()
+		# dictionaries 'attributes', 'buffers' and 'items' will be used as caches
+		self.attributes, self.buffers, self.items = {}, {}, {}
+		self.root, self.cache = root, cache
 
-class reader(fuse.Fuse):
-
-	def __init__(self, *args, **kw):
-		fuse.Fuse.__init__(self, *args, **kw)
-		# dictionaries 'attributes', 'items' and 'buffers' will be used as caches
-		self.attributes, self.items, self.buffers = {}, {}, {}
-		self.root, self.nocache = False, False
-
-	def getattr(self, path):
+	def getattr(self, path, handle = None):
 		if path in self.attributes:
 			return self.attributes[path]
 		else:
 			# file attributes are obtained using device.stat
 			mode, size, time = device.stat(self.root + path)
 			if not mode:
-				return -noEntry
-			attributes = fuse.Stat()
-			directory = isDir(mode)
+				raise FuseOSError(noEntry)
+			attributes, directory = lambda:None, isDir(mode)
 			attributes.st_atime, attributes.st_ctime, attributes.st_mtime = time, time, time
+			attributes.st_gid, attributes.st_uid = self.gid, self.uid
 			attributes.st_mode = (directory and 0o40550 or 0o100440)
 			attributes.st_size = (not directory and size or 0)
-			attributes.st_gid, attributes.st_uid = gid, uid
 			attributes.st_nlink = (directory and 2 or 1)
+			attributes = vars(attributes)
 			# caching attributes for future calls
-			if not self.nocache:
+			if self.cache:
 				self.attributes[path] = attributes
 			return attributes
 
 	def readdir(self, path, offset):
 		if path in self.items:
-			for item in self.items[path]:
-				yield fuse.Direntry(item)
+			return self.items[path]
 		else:
 			# list of files (eg. items) is obtained using device.list
 			items = [
@@ -122,21 +130,15 @@ class reader(fuse.Fuse):
 				if isReg(item.mode) or isDir(item.mode)
 			]
 			# caching items for future calls
-			if not self.nocache:
+			if self.cache:
 				self.items[path] = set(items)
-			for item in items:
-				yield fuse.Direntry(item)
+			return items
 
-	def open(self, path, flags):
-		# only read-only mode supported
-		if flags & (O_RDONLY | O_WRONLY | O_RDWR) != O_RDONLY:
-			return -accessDenied
-
-	def read(self, path, size, offset):
-		attributes = self.attributes[path]
-		if offset < attributes.st_size:
-			if offset + size > attributes.st_size:
-				size = attributes.st_size - offset
+	def read(self, path, size, offset, handle = None):
+		st_size = self.attributes[path]['st_size']
+		if offset < st_size:
+			if offset + size > st_size:
+				size = st_size - offset
 		else:
 			return b''
 		if path in self.buffers:
@@ -145,31 +147,12 @@ class reader(fuse.Fuse):
 			buffer = BytesIO()
 			# file content is obtained using device.pull
 			device.pull(self.root + path, buffer)
-			# caching buffer for future calls
+			# always caching buffer for future read calls
 			self.buffers[path] = buffer
 			return buffer.getvalue()[offset:(offset + size)]
 
 	def release(self, path, flags):
 		self.buffers.pop(path)
-
-	def fsinit(self):
-		self.root = not self.root and "/sdcard" or ""
-
-
-server = reader()
-server.parser.add_option(
-	"-r", "--root",
-	action="store_true",
-	dest="root",
-	help="access from / (default from /sdcard)"
-)
-server.parser.add_option(
-	"-n", "--nocache",
-	action="store_true",
-	dest="nocache",
-	help="do not cache data (default cache data)"
-)
-server.parse(values=server)
 
 
 signer = PythonRSASigner(public, private)
@@ -190,8 +173,39 @@ while not device.available:
 	except Exception as error:
 		exit(error)
 
+	
+parser = argparse.ArgumentParser(
+	prog = "sdcard",
+	description = "USB read-only access to SD card on Android system"
+)
+parser.add_argument(
+	"-r",
+	"--root",
+	action = "store_false",
+	dest = "root",
+	help = "access from / (default from /sdcard)"
+)
+parser.add_argument(
+	"-n",
+	"--nocache",
+	action = "store_false",
+	dest = "cache",
+	help = "do not cache data (default cache data)"
+)
+parser.add_argument(
+	"mountpoint",
+	help = "Android system mount point"
+)
+args = parser.parse_args()
+args.root = args.root and "/sdcard" or ""
 
-server.main()
+fuse = FUSE(
+	Reader(args.root, args.cache),
+	args.mountpoint,
+	ro = True,
+	foreground = True,
+	debug = True
+)
 device.close()
 
 def main():
