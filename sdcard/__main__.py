@@ -1,6 +1,21 @@
 #!/usr/bin/env python
 
 
+# /// script
+# requires-python = ">=3"
+# dependencies = [
+# "adb_shell>=0.4.4",
+# "cffi>=1.17.1",
+# "cryptography>=43.0.1",
+# "fuse-python>=1.0.8",
+# "libusb1>=3.1.0",
+# "pyasn1>=0.6.1",
+# "pycparser>=2.22",
+# "rsa>=4.9"
+# ]
+# ///
+
+
 # this python code provides read-only access to the /sdcard/ (pseudo)folder
 # on an android smartphone.
 # it uses fuse-python (https://github.com/libfuse/python-fuse) and
