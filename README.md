@@ -77,7 +77,6 @@ pipx install https://github.com/patatetom/sdcard/archive/main.zip
 ```shell
 ~/venv/android/bin/sdcard --help
 Usage: sdcard [mountpoint] [options]
-
 Options:
     -h, --help             show this help message and exit
     -o opt,[opt...]        mount options
