@@ -29,6 +29,7 @@
 # 		keygen('/tmp/adb_shell_reader')
 # the contents of the two generated files should respectively replace the two
 # variables defined below.
+# you can also reuse your ADB keys (%UserProfile%/.android/adbkey*)
 private, public = """
 -----BEGIN PRIVATE KEY-----
 MIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCSbBRV9bFH4Cik
